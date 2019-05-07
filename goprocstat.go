@@ -26,8 +26,8 @@ func main() {
 
 		if err == nil {
 			cpuUsage, _ := p.CPUPercent()
-			fmt.Printf("%d  %s  pid: %d   cpu: %0.2f%%\t user: %0.2f\t system: %0.2f\n",
-				time.Now().Unix(), name, *flagPID, cpuUsage, v.User, v.System)
+			fmt.Printf("%d  %s  cpu: %3.2f%%   user: %-3.2f   system: %0.2f   iowait: %0.2f   irq: %0.2f   softirq: %0.2f\n",
+				time.Now().Unix(), name, cpuUsage, v.User, v.System, v.Iowait, v.Irq, v.Softirq)
 		} else {
 			fmt.Println(err)
 		}
