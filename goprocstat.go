@@ -9,7 +9,7 @@ import (
 
 func main() {
 
-	flagPID := flag.Int("PID", 1, "Gimme your PID")
+	flagPID := flag.Int("p", 1, "Gimme your PID")
 	flag.Parse()
 
 	p, _ := process.NewProcess(int32(*flagPID))
