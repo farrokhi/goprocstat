@@ -16,6 +16,7 @@ func main() {
 
 	p, _ := process.NewProcess(int32(*flagPID))
 	v, err := p.Times()
+	name, _ := p.Name()
 	cnt := 0
 
 	for {
@@ -24,7 +25,9 @@ func main() {
 		}
 
 		if err == nil {
-			fmt.Printf("%d  pid: %d   user: %f\t system: %f\n", time.Now().Unix(), *flagPID, v.User, v.System)
+			cpuUsage, _ := p.CPUPercent()
+			fmt.Printf("%d  %s  pid: %d   cpu: %0.2f%%\t user: %0.2f\t system: %0.2f\n",
+				time.Now().Unix(), name, *flagPID, cpuUsage, v.User, v.System)
 		} else {
 			fmt.Println(err)
 		}
