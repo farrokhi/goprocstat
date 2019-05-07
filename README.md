@@ -1,10 +1,12 @@
 # goprocstat
 
-Simply display utime and stime for a given PID every second:
+Displays process status for a given PID every second:
 ```
-% ./goprocstat -n 4 -p 47
-1557222740  pid: 47   user: 0.110000	 system: 0.150000
-1557222741  pid: 47   user: 0.110000	 system: 0.150000
-1557222742  pid: 47   user: 0.110000	 system: 0.150000
-1557222743  pid: 47   user: 0.110000	 system: 0.150000
+./goprocstat  -p 14935 -n 6
+1557237855  top  cpu: 7.47%   user: 0.09   system: 0.37   iowait: 0.00   irq: 0.00   softirq: 0.00
+1557237856  top  cpu: 6.70%   user: 0.09   system: 0.37   iowait: 0.00   irq: 0.00   softirq: 0.00
+1557237857  top  cpu: 6.24%   user: 0.09   system: 0.37   iowait: 0.00   irq: 0.00   softirq: 0.00
+1557237858  top  cpu: 7.29%   user: 0.09   system: 0.37   iowait: 0.00   irq: 0.00   softirq: 0.00
+1557237859  top  cpu: 8.23%   user: 0.09   system: 0.37   iowait: 0.00   irq: 0.00   softirq: 0.00
+1557237860  top  cpu: 9.50%   user: 0.09   system: 0.37   iowait: 0.00   irq: 0.00   softirq: 0.00
 ```
