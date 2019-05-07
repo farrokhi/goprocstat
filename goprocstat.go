@@ -16,12 +16,12 @@ func main() {
 
 	p, _ := process.NewProcess(int32(*flagPID))
 	v, err := p.Times()
-	cnt:=0
+	cnt := 0
 
 	for {
-		if *flagNUM >= 0  &&  cnt >= *flagNUM {
-				os.Exit(0)
-			}
+		if *flagNUM >= 0 && cnt >= *flagNUM {
+			os.Exit(0)
+		}
 
 		if err == nil {
 			fmt.Printf("%d  pid: %d   user: %f\t system: %f\n", time.Now().Unix(), *flagPID, v.User, v.System)
