@@ -15,18 +15,18 @@ func main() {
 	flag.Parse()
 
 	p, _ := process.NewProcess(int32(*flagPID))
-	v, err := p.Times()
 	name, _ := p.Name()
 	cnt := 0
 
 	for {
+		v, err := p.Times()
 		if *flagNUM >= 0 && cnt >= *flagNUM {
 			os.Exit(0)
 		}
 
 		if err == nil {
 			cpuUsage, _ := p.CPUPercent()
-			fmt.Printf("%d  %s  cpu: %3.2f%%   user: %-3.2f   system: %0.2f   iowait: %0.2f   irq: %0.2f   softirq: %0.2f\n",
+			fmt.Printf("%d  %s  cpu: %5.2f%%   user: %5.2f   system: %5.2f   iowait: %5.2f   irq: %5.2f   softirq: %5.2f\n",
 				time.Now().Unix(), name, cpuUsage, v.User, v.System, v.Iowait, v.Irq, v.Softirq)
 		} else {
 			fmt.Println(err)
