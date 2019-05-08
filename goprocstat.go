@@ -4,11 +4,12 @@ import (
 	"flag"
 	"fmt"
 	"github.com/shirou/gopsutil/process"
-	"os"
 	"time"
 )
 
 func main() {
+
+	var currUser, prevUser, currSystem, prevSystem, cpuUsage float64
 
 	flagPID := flag.Int("p", 1, "PID for process to monitor")
 	flagNUM := flag.Int("n", -1, "Stop after n times of displaying stat")
@@ -18,16 +19,26 @@ func main() {
 	name, _ := p.Name()
 	cnt := 0
 
-	for {
+	v, _ := p.Times()
+	currUser = v.User
+	currSystem = v.System
+
+	for !(*flagNUM >= 0 && cnt >= *flagNUM) {
+
 		v, err := p.Times()
-		if *flagNUM >= 0 && cnt >= *flagNUM {
-			os.Exit(0)
-		}
 
 		if err == nil {
-			cpuUsage, _ := p.CPUPercent()
-			fmt.Printf("%d  %s  cpu: %5.2f%%   user: %5.2f   system: %5.2f   iowait: %5.2f   irq: %5.2f   softirq: %5.2f\n",
-				time.Now().Unix(), name, cpuUsage, v.User, v.System, v.Iowait, v.Irq, v.Softirq)
+			// keep old counters, needed to calculated variance
+			prevUser = currUser
+			prevSystem = currSystem
+
+			currUser = v.User
+			currSystem = v.System
+
+			cpuUsage, _ = p.CPUPercent()
+
+			fmt.Printf("%d  %s  cpu: %5.2f%%   user: %5.2f (%+5.2f)   system: %5.2f (%+5.2f)   iowait: %5.2f   irq: %5.2f   softirq: %5.2f\n",
+				time.Now().Unix(), name, cpuUsage, currUser, currUser-prevUser, currSystem, currSystem-prevSystem, v.Iowait, v.Irq, v.Softirq)
 		} else {
 			fmt.Println(err)
 		}
